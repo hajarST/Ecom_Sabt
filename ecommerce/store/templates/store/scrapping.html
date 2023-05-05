@@ -1,0 +1,31 @@
+{%include 'store/layouts/main.html' %}
+
+
+{% block content %}
+<div class="py-3 bg-dark">
+    <div class="container">
+        <a class="text-white" href="{% url 'home' %}">Home /</a>
+       
+     </div>
+
+</div>
+  <h1>Products</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+        <tr>
+          <td>{{ product.name }}</td>
+          <td><img src="{{ product.image }}"></td>
+          <td>{{ product.price }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

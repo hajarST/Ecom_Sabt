@@ -1,0 +1,198 @@
+{% load static %}
+{% comment %} {% with cart_count=request.session.cart|length wishlist_count=request.user.wishlist.items.count %} {% endcomment %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <img src="{% static 'images/logo.png' %}" height="30px" width="30px" alt="logo">
+      <a class="navbar-brand" href="{% url 'home' %}"> &nbsp; Cartify</a>
+    </img>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="search-bar">
+        <form action="{% url 'searchproduct' %}" method="POST">
+        {% csrf_token %}
+            <div class="input-group ">
+              <input type="search" required class="form-control" name="productsearch" id="searchproducts" placeholder="Search products" >
+              <button type="submit" class="input-group-text"><i class="fa fa-search"></i></button>
+              
+            </div>
+        </form>
+      </div>
+    
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'home' %} active {% endif %} " aria-current="page" href="{% url 'home' %}"><i class="fa fa-home" aria-hidden="true"></i>&nbsp; Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'collections' %} active {% endif %}" href="{% url 'collections' %}"><i class="fa fa-shopping-bag" aria-hidden="true"></i>&nbsp; Collections</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'cart' %} active {% endif %}" href="{% url 'cart' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Cart</a>
+          <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == 'wishlist' %} active {% endif %}" href="{% url 'wishlist' %}"><i class="fa fa-heart" aria-hidden="true"></i>&nbsp; Wishlist</a>
+          </li>
+          </li>
+          {% if request.user.is_authenticated  %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  data-bs-toggle="dropdown"  >
+                {{request.user}}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="{% url 'myorders' %}">My Orders</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+              </ul>
+            </li>
+
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'loginpage' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'register' %}">Register</a>
+            </li>
+          {% endif %}
+         
+          
+        </ul>
+      </div>
+    </div>
+  </nav> 
+{% comment %} {% endwith %} {% endcomment %}
+
+
+
+  {% comment %} <nav id="navbar" class="navbar order-last order-lg-0">
+    <h1 class="logo me-auto me-lg-0"><a href="{% url 'home' %}">SabtStore</a></h1>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="search-bar">
+        <form action="{% url 'searchproduct' %}" method="POST">
+        {% csrf_token %}
+            <div class="input-group ">
+              <input type="search" required class="form-control" name="productsearch" id="searchproducts" placeholder="Search products" >
+              <button type="submit" class="input-group-text"><i class="fa fa-search"></i></button>
+              
+            </div>
+        </form>
+      </div>
+    
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'home' %} active {% endif %} " aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'collections' %} active {% endif %}" href="{% url 'collections' %}">Collections</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'cart' %} active {% endif %}" href="{% url 'cart' %}">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == 'wishlist' %} active {% endif %}" href="{% url 'wishlist' %}">Wishlist</a>
+          </li>
+          {% if request.user.is_authenticated  %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  data-bs-toggle="dropdown"  >
+                {{request.user}}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="{% url 'myorders' %}">My Orders</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+              </ul>
+            </li>
+
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'loginpage' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{% url 'register' %}">Register</a>
+            </li>
+          {% endif %}
+         
+          
+        </ul>
+      </div>
+    </div>
+  </nav> {% endcomment %}
+
+
+
+{% comment %} 
+  <header id="header" class="fixed-top ">
+  <div class="container-fluid">
+
+    <div class="row justify-content-center">
+      <div class="col-xl-9 d-flex align-items-center justify-content-lg-between">
+        <h1 class="logo me-auto me-lg-0"><a href="{% url 'home' %}">SabtStore</a></h1>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="search-bar">
+          <form action="{% url 'searchproduct' %}" method="POST">
+          {% csrf_token %}
+              <div class="input-group ">
+                <input type="search" required class="form-control" name="productsearch" id="searchproducts" placeholder="Search products" >
+                <button type="submit" class="input-group-text"><i class="fa fa-search"></i></button>
+                
+              </div>
+          </form>
+        </div>
+      
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <a href="index.html" class="logo me-auto me-lg-0"><img src="{%static 'images/logo.png'%}" alt="" class="img-fluid"></a> 
+
+        <nav id="navbar" class="navbar order-last order-lg-0 " >
+          <ul>
+
+            <li><a class="nav-link scrollto {% if request.resolver_match.url_name == 'home' %} active {% endif %} " aria-current="page" href="{% url 'home' %}">Home</a>
+         </li>
+            <li><a class="nav-link scrollto{% if request.resolver_match.url_name == 'collections' %} active {% endif %}" href="{% url 'collections' %}">Collections</a>
+            </li>
+            <li><a class="nav-link scrollto{% if request.resolver_match.url_name == 'cart' %} active {% endif %}" href="{% url 'cart' %}">Cart</a>
+            </li>
+            <li> <a class="nav-link scrollto {% if request.resolver_match.url_name == 'wishlist' %} active {% endif %}" href="{% url 'wishlist' %}">Wishlist</a>
+            </li>
+            {% if request.user.is_authenticated  %}
+            <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a href="#">Drop Down 1</a></li>
+                <li class="dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  data-bs-toggle="dropdown"  >
+                  {{request.user}}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="{% url 'myorders' %}">My Orders</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+                </li>
+                
+              </ul>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="{% url 'loginpage' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link scrollto" href="{% url 'register' %}">Register</a>
+            </li>
+           {% endif %}
+
+
+            
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+        <a href="#about" class="get-started-btn scrollto">Get Started</a>
+      </div>
+    </div>
+
+  </div>
+</header> {% endcomment %}
