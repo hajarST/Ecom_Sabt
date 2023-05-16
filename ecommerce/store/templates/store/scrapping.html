@@ -1,31 +1,65 @@
-{%include 'store/layouts/main.html' %}
-
-
+{% comment %} {%include 'store/layouts/main.html' %}
+{% load static %}
 {% block content %}
+
 <div class="py-3 bg-dark">
     <div class="container">
         <a class="text-white" href="{% url 'home' %}">Home /</a>
-       
-     </div>
+    </div>
 
 </div>
-  <h1>Products</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Image</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in products %}
-        <tr>
-          <td>{{ product.name }}</td>
-          <td><img src="{{ product.image }}"></td>
-          <td>{{ product.price }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% endblock %}
+<div class="py-5">
+    <div class="container">
+        <h1>Scraped Products</h1>
+
+    <ul>
+        {% for product in products %}
+        <li>
+            <h3>{{ product.name }}</h3>
+            <p>Price: {{ product.price }}</p>
+            <img src="{{ product.image_url }}" alt="Product Image">
+        </li>
+        {% endfor %}
+    </ul>
+        
+</div>
+</div>
+{% endblock content %} {% endcomment %}
+<!-- scrapping.html -->
+{% include 'store/layouts/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="py-3 bg-dark">
+    <div class="container">
+        <a class="text-white" href="{% url 'home' %}">Home /</a>
+    </div>
+</div>
+
+<div class="py-5">
+    <div class="container">
+        <div class="section-title">
+            <img src="{% static 'images/logo.png' %}" height="50px" width="50px" alt="logo">
+        <h1>Scrapped Products</h1>
+        </div>
+
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <img src="{{ product.image_url }}" class="card-img-top" alt="Product Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">Price: {{ product.price }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}
+

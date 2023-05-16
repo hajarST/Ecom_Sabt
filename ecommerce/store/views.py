@@ -5,6 +5,10 @@ from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.http import HttpResponse
+import requests
+from bs4 import BeautifulSoup
+from store.models import Product_Scrap
+
 # Create your views here.
 
 def home(request):
@@ -79,4 +83,61 @@ def contact(request):
         return HttpResponse('Your message has been sent. Thank you!')
 
     return HttpResponse('Invalid request method')
+
+# def scrape_products(request):
+#     url = 'https://www.jumia.ma/jeux-videos-consoles/'
+#     response = requests.get(url)
+#     soup = BeautifulSoup(response.content, 'html.parser')
+#     product_items = soup.find_all('a', class_='core')
+
+#     products_scrap = []
+#     for item in product_items:
+#         name_element = item.find('h3', class_='name')
+        
+#         name = name_element.text.strip() if name_element else 'N/A'
+
+#         price_element = item.find('div', class_='prc')
+#         price = price_element.text.strip() if price_element else 'N/A'
+
+#         image_url_element = item.find('img')
+#         image_url = image_url_element['data-src'] if image_url_element and 'data-src' in image_url_element.attrs else ''
+
+#         product_s = Product_Scrap(name=name, price=price, image_url=image_url)
+#         products_scrap.append(product_s)
+
+#     Product_Scrap.objects.bulk_create(products_scrap)
+
+#     context = {
+#         'products': products_scrap
+#     }
+#     return render(request, 'store/scrapping.html', context)
+def scrape_products(request):
+    url = 'https://www.jumia.ma/jeux-videos-consoles/'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    product_items = soup.find_all('a', class_='core')
+
+    products_scrap = []
+    for item in product_items:
+        name_element = item.find('h3', class_='name')
+        name = name_element.text.strip() if name_element else 'N/A'
+        price_element = item.find('div', class_='prc')
+        price = price_element.text.strip() if price_element else 'N/A'
+        
+        image_url_element = item.find('img')
+        image_url = image_url_element['data-src'] if image_url_element and 'data-src' in image_url_element.attrs else ''
+
+        product_s = Product_Scrap(name=name, price=price, image_url=image_url)
+        products_scrap.append(product_s)
+
+    Product_Scrap.objects.bulk_create(products_scrap)
+
+    context = {
+        'products': products_scrap
+    }
+    return render(request, 'store/scrapping.html', context)
+
+
+
+
 

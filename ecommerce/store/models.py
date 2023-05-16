@@ -113,3 +113,12 @@ class Profile(models.Model):
     
     def __str__(self) :
         return self.user.username
+
+class  Product_Scrap(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.CharField(max_length=50)
+    image_url = models.URLField()
+
+    def __str__(self):
+        return self.name
+

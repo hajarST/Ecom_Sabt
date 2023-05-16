@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-from store.controller import authview , cart,wishlist , checkout, order , scrapping
+from store.controller import authview , cart,wishlist , checkout, order
 
 urlpatterns = [
     # path('',views.home,name="/"),
@@ -26,5 +26,7 @@ urlpatterns = [
     path('product-list', views.productListAjax), 
      path('searchproduct', views.searchproduct , name = "searchproduct"), 
      path('contact', views.contact , name = "contact"), 
-#      path('scrapping', scrapping.scrapping, name = "scrapping"), 
+    # path('scrape/', views.scrape_and_save, name='scrape_and_save'),
+    #  path ('collections/<str:cate_slug>/<str:prod_slug>',views.productview, name="Ebay"),
+     path('scrape/', views.scrape_products, name='scrape_products'),
  ]
